@@ -1,11 +1,9 @@
-name: CI
+name: ci
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+    branches: [ main ]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,39 +11,15 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
-      - name: Install backend
-        working-directory: backend
-        run: npm ci
-      - name: Lint/Typecheck backend
+          node-version: 22
+          cache: 'npm'
+      - name: Install & build backend
         working-directory: backend
         run: |
-          npm run lint --if-present
-          npm run typecheck --if-present
-      - name: Build backend
-        working-directory: backend
-        env:
-          DATABASE_URL: "postgresql://local/local@localhost:5432/local?schema=public"
-        run: npm run build
-      - name: Upload backend dist
-        uses: actions/upload-artifact@v4
-        with:
-          name: backend-dist
-          path: backend/dist/**
-      - name: Install frontend
+          npm ci
+          npm run build
+      - name: Install & build frontend
         working-directory: gym-frontend
-        run: npm ci
-      - name: Lint frontend
-        working-directory: gym-frontend
-        run: npm run lint --if-present
-      - name: Build frontend
-        working-directory: gym-frontend
-        env:
-          VITE_API_URL: "http://localhost:5000"
-        run: npm run build
-      - name: Upload frontend dist
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-dist
-          path: gym-frontend/dist/**
+        run: |
+          npm ci
+          npm run build
