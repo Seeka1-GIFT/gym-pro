@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "zip:dist": "cd dist && powershell -Command \"Compress-Archive -Path * -DestinationPath ../dist_upload.zip -Force\""
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
