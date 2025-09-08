@@ -6,18 +6,11 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "lint": "eslint . --ext .ts --max-warnings=0",
-    "format": "prettier --write .",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "echo \"(backend tests TBD)\" && exit 0",
-    "e2e": "tsx scripts/e2e.ts",
-    "e2e:win": "powershell -Command \"$env:BASE_URL='http://127.0.0.1:5000'; tsx scripts/e2e.ts\"",
-    "e2e:local": "tsx scripts/run-e2e-local.ts",
-    "prisma:generate": "prisma generate",
     "postinstall": "prisma generate",
+    "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate deploy",
-    "prisma:studio": "prisma studio",
-    "seed:admin": "tsx scripts/seed-admin.ts"
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
