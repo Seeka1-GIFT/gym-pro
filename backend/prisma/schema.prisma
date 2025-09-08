@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  phone        String?
+  passwordHash String
+  role         Role          @default(MEMBER)
+  isActive     Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  refreshTokens RefreshToken[]
+}
+
+enum Role {
+  ADMIN
+  TRAINER
+  RECEPTION
+  MEMBER
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  userId    String
+  tokenHash String
+  revoked   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Member {
+  id               String   @id @default(cuid())
+  fullName         String
+  phone            String?  @unique
+  gender           String?
+  dob              DateTime?
+  photoUrl         String?
+  emergencyContact String?
+  notes            String?
+  createdAt        DateTime @default(now())
+  memberships      Membership[]
+  attendances      Attendance[]
+  payments         Payment[]
+}
+
+model Plan {
+  id           String   @id @default(cuid())
+  name         String   @unique
+  price        Decimal
+  durationDays Int
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  memberships  Membership[]
+}
+
+enum MembershipStatus {
+  ACTIVE
+  PAUSED
+  EXPIRED
+}
+
+model Membership {
+  id         String           @id @default(cuid())
+  memberId   String
+  planId     String
+  startDate  DateTime
+  endDate    DateTime
+  status     MembershipStatus @default(ACTIVE)
+  createdAt  DateTime         @default(now())
+
+  member     Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  plan       Plan   @relation(fields: [planId], references: [id], onDelete: Restrict)
+  payments   Payment[]
+
+  @@index([memberId])
+  @@index([planId])
+}
+
+enum AttendanceSource {
+  MANUAL
+  QR_CODE
+  FINGERPRINT
+}
+
+model Attendance {
+  id         String           @id @default(cuid())
+  memberId   String
+  source     AttendanceSource @default(MANUAL)
+  checkIn    DateTime         @default(now())
+  checkOut   DateTime?
+  createdAt  DateTime         @default(now())
+
+  member     Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@index([memberId])
+  @@index([checkIn])
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  BANK_TRANSFER
+  MOBILE_MONEY
+}
+
+model Payment {
+  id           String        @id @default(cuid())
+  memberId     String
+  membershipId String?
+  amount       Decimal
+  method       PaymentMethod @default(CASH)
+  reference    String?
+  notes        String?
+  createdAt    DateTime      @default(now())
+
+  member       Member     @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  membership   Membership? @relation(fields: [membershipId], references: [id], onDelete: SetNull)
+
+  @@index([memberId])
+  @@index([createdAt])
+}
+
+enum ExpenseCategory {
+  ELECTRICITY
+  WATER
+  RENT
+  EQUIPMENT
+  MAINTENANCE
+  SUPPLIES
+  OTHER
+}
+
+model Expense {
+  id         String          @id @default(cuid())
+  category   ExpenseCategory
+  amount     Decimal
+  note       String?
+  createdAt  DateTime        @default(now())
+
+  @@index([category])
+  @@index([createdAt])
+}
+
+model Asset {
+  id           String   @id @default(cuid())
+  name         String
+  category     String
+  serialNo     String?  @unique
+  purchaseDate DateTime?
+  cost         Decimal
+  condition    String   @default("good")
+  location     String?
+  notes        String?
+  createdAt    DateTime @default(now())
+
+  @@index([category])
+  @@index([condition])
+}

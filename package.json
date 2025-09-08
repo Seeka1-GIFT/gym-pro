@@ -1,0 +1,32 @@
+{
+  "name": "gym-monorepo",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "gym-frontend"
+  ],
+  "scripts": {
+    "bootstrap": "npm --workspaces install",
+    "build": "npm -ws run build",
+    "dev": "concurrently -k -n BACKEND,FRONTEND -c yellow,cyan \"npm -w backend run dev\" \"npm -w gym-frontend run dev\"",
+    "lint": "npm -ws run lint",
+    "format": "npm -ws run format",
+    "typecheck": "npm -ws run typecheck",
+    "test": "npm -ws run test",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css,scss}": [
+      "prettier --write"
+    ]
+  }
+}
