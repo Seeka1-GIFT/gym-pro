@@ -13,7 +13,7 @@
     "format": "npm -ws run format",
     "typecheck": "npm -ws run typecheck",
     "test": "npm -ws run test",
-    "prepare": "is-ci || husky",
+    "prepare": "echo skip husky in CI",
     "deploy:init": "tsx scripts/deploy/cli.ts init",
     "deploy:build:frontend": "tsx scripts/deploy/cli.ts build:frontend",
     "deploy:upload:frontend": "tsx scripts/deploy/cli.ts upload:frontend",

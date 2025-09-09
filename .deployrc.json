@@ -16,7 +16,8 @@
       "JWT_ACCESS_SECRET": "832e62dda5caed5b3b47c9f86bccba2785c488990d9559afa64b7e5d2fb6926d",
       "JWT_REFRESH_SECRET": "4ab319da347d0b29bd71c07d8a2d6dfb70f7308ce976f3ca8c5a5ed872361220",
       "CORS_ORIGIN": "https://shaweed.com",
-      "HUSKY": "0"
+      "HUSKY": "0",
+      "NPM_CONFIG_PRODUCTION": "false"
     }
   },
   "frontend": {
