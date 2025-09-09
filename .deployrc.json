@@ -1,0 +1,25 @@
+{
+  "hostinger": {
+    "ftp": {
+      "host": "82.25.96.18",
+      "port": 21,
+      "username": "u328310959@shaweed.com",
+      "password": "Mygym15#",
+      "remoteDir": "/public_html"
+    }
+  },
+  "render": {
+    "env": {
+      "NODE_ENV": "production",
+      "PORT": "5000",
+      "DATABASE_URL": "postgresql://neondb_owner:npg_0X1PeYCqbwro@ep-gentle-dream-adrx3660-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require",
+      "JWT_ACCESS_SECRET": "832e62dda5caed5b3b47c9f86bccba2785c488990d9559afa64b7e5d2fb6926d",
+      "JWT_REFRESH_SECRET": "4ab319da347d0b29bd71c07d8a2d6dfb70f7308ce976f3ca8c5a5ed872361220",
+      "CORS_ORIGIN": "https://shaweed.com",
+      "HUSKY": "0"
+    }
+  },
+  "frontend": {
+    "viteApiUrl": "https://YOUR-RENDER-APP.onrender.com"
+  }
+}

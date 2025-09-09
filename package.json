@@ -13,12 +13,24 @@
     "format": "npm -ws run format",
     "typecheck": "npm -ws run typecheck",
     "test": "npm -ws run test",
-    "prepare": "husky"
+    "prepare": "is-ci || husky",
+    "deploy:init": "tsx scripts/deploy/cli.ts init",
+    "deploy:build:frontend": "tsx scripts/deploy/cli.ts build:frontend",
+    "deploy:upload:frontend": "tsx scripts/deploy/cli.ts upload:frontend",
+    "deploy:render": "tsx scripts/deploy/cli.ts render:deploy",
+    "deploy:verify": "tsx scripts/deploy/cli.ts verify",
+    "deploy:all": "tsx scripts/deploy/cli.ts all"
   },
   "devDependencies": {
+    "adm-zip": "^0.5.16",
+    "basic-ftp": "^5.0.5",
     "concurrently": "^9.2.1",
     "husky": "^9.1.7",
-    "lint-staged": "^15.5.2"
+    "is-ci": "^3.0.1",
+    "lint-staged": "^15.5.2",
+    "node-fetch": "^3.3.2",
+    "ssh2-sftp-client": "^9.1.0",
+    "tsx": "^4.20.5"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [

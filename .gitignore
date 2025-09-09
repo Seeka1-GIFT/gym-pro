@@ -8,4 +8,12 @@ coverage/
 .DS_Store
 .vscode/
 
+# Keep env examples, ignore real envs
+!env.example
+backend/.env
+backend/.env.*
+!backend/env.example
+gym-frontend/.env
+gym-frontend/.env.*
+
 
