@@ -1,13 +1,13 @@
 {
   "name": "gym-backend",
   "version": "1.0.0",
-  "type": "module",
+  "main": "dist/server.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "prisma generate && tsc && echo 'Build completed successfully' && ls -la dist/",
+    "build": "npm run prisma:generate && tsc -p tsconfig.json",
     "start": "node dist/server.js",
-    "prisma:migrate": "prisma migrate deploy",
-    "postinstall": "prisma generate",
+    "prisma:generate": "prisma generate",
+    "prismamigrate": "prisma migrate deploy",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
